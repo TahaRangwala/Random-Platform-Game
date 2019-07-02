@@ -1,6 +1,7 @@
 package com.taha.platform.framework;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 
 public abstract class GameObject {
@@ -17,17 +18,41 @@ public abstract class GameObject {
 	
 	public abstract void tick(LinkedList<GameObject> object);
 	public abstract void render(Graphics g);
+	public abstract Rectangle getBounds();
 	
-	public abstract float getX();
-	public abstract float getY();
-	public abstract void setX(float x);
-	public abstract void setY(float y);
+	public float getX() {
+		return x;
+	}
 	
-	public abstract float getVelocityX();
-	public abstract float getVelocityY();
-	public abstract void setVelocityX(float velocityX);
-	public abstract void setVelocityY(float velocityY);
+	public float getY() {
+		return y;
+	}
 	
-	public abstract ObjectId getId();
+	public void setX(float x) {
+		this.x = x;
+	}
+	
+	public void setY(float y) {
+		this.y = y;
+	}
+	
+	public float getVelocityX() {
+		return velocityX;
+	}
+	
+	public float getVelocityY() {
+		return velocityY;
+	}
+	
+	public void setVelocityX(float velocityX) {
+		this.velocityX = velocityX;
+	}
+	public void setVelocityY(float velocityY) {
+		this.velocityY = velocityY;
+	}
+	
+	public ObjectId getId() {
+		return id;
+	}
 	
 }

@@ -2,6 +2,7 @@ package com.taha.platform.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 
 import com.taha.platform.framework.GameObject;
@@ -22,40 +23,8 @@ public class Test extends GameObject{
 		g.fillRect((int)x, (int)y, 32, 32);
 	}
 
-	public float getX() {
-		return x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	public float getVelocityX() {
-		return velocityX;
-	}
-
-	public float getVelocityY() {
-		return velocityY;
-	}
-
-	public void setVelocityX(float velocityX) {
-		this.velocityX = velocityX;
-	}
-
-	public void setVelocityY(float velocityY) {
-		this.velocityY = velocityY;
-	}
-
-	public ObjectId getId() {
-		return id;
+	public Rectangle getBounds() {
+		return null;
 	}
 
 }
