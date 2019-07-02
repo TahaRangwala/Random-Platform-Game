@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import com.taha.platform.framework.GameObject;
 import com.taha.platform.framework.ObjectId;
+import com.taha.platform.window.Handler;
 
 public class Player extends GameObject{
 	
@@ -15,14 +16,17 @@ public class Player extends GameObject{
 	
 	private float gravity = 0.5f;
 	private final float MAX_SPEED = 10;
+	
+	private Handler handler;
 
-	public Player(float x, float y, ObjectId id) {
+	public Player(float x, float y, Handler handler, ObjectId id) {
 		super(x, y, id);
+		this.handler = handler;
 	}
 
 	public void tick(LinkedList<GameObject> object) {
 		x += velocityX;
-		//y += velocityY;
+		y += velocityY;
 		
 		if(falling || jumping) {
 			velocityY += gravity;
@@ -31,6 +35,22 @@ public class Player extends GameObject{
 			}
 		}
 		
+		Collision(object);
+	}
+	
+	private void Collision(LinkedList<GameObject> object) {
+		for(int i = 0; i < handler.object.size(); i++) {
+			GameObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getId() == ObjectId.Block) {
+				if(getBounds().intersects(tempObject.getBounds())) {
+					y = tempObject.getY() - height;
+					velocityY = 0;
+					falling = false;
+					jumping = false;
+				}
+			}
+		}
 	}
 
 	public void render(Graphics g) {
