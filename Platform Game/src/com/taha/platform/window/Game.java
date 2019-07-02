@@ -4,11 +4,27 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
+
+import com.taha.platform.framework.ObjectId;
+import com.taha.platform.objects.Test;
 
 public class Game extends Canvas implements Runnable{
 	
 	private boolean running = false;
 	private Thread thread;
+	
+	//Object
+	Handler handler;
+	
+	Random rand = new Random();
+	
+	private void init() {
+		handler = new Handler();
+		
+		for(int i = 0; i < 50; i++)
+			handler.addObject(new Test(rand.nextInt(800),rand.nextInt(600),ObjectId.Test));
+	}
 	
 	public synchronized void start() {
 		if(running)
@@ -19,6 +35,8 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void run() {
+		init();
+		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -48,7 +66,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	private void tick() {
-		
+		handler.tick();
 	}
 	
 	private void render() {
@@ -63,6 +81,7 @@ public class Game extends Canvas implements Runnable{
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		handler.render(g);
 		
 		g.dispose();
 		bs.show();

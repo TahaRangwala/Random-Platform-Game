@@ -2,6 +2,7 @@ package com.taha.platform.framework;
 
 public enum ObjectId {
 	
-	Player();
+	Player(),
+	Test();
 	
 }

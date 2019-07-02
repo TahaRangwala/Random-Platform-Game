@@ -1,5 +1,6 @@
 package com.taha.platform.objects;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
@@ -17,7 +18,8 @@ public class Test extends GameObject{
 	}
 
 	public void render(Graphics g) {
-		
+		g.setColor(Color.red);
+		g.fillRect((int)x, (int)y, 32, 32);
 	}
 
 	public float getX() {
