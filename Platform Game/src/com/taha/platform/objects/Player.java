@@ -99,6 +99,4 @@ public class Player extends GameObject{
 		return new Rectangle((int)x, (int)y+5, (int)5, (int)height-10);
 	}
 	
-	
-	
 }

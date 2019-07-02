@@ -3,12 +3,12 @@ package com.taha.platform.window;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
 import com.taha.platform.framework.KeyInput;
 import com.taha.platform.framework.ObjectId;
-import com.taha.platform.objects.Block;
 import com.taha.platform.objects.Player;
 
 public class Game extends Canvas implements Runnable{
@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable{
 	
 	//Object
 	Handler handler;
+	Camera cam;
 	
 	Random rand = new Random();
 	
@@ -28,6 +29,8 @@ public class Game extends Canvas implements Runnable{
 		HEIGHT = getHeight();
 		
 		handler = new Handler();
+		
+		cam = new Camera(0,0);
 		
 		handler.addObject(new Player(100, 100, handler, ObjectId.Player));
 		
@@ -77,6 +80,11 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		handler.tick();
+		for(int i = 0; i < handler.object.size(); i++) {
+			if(handler.object.get(i).getId() == ObjectId.Player) {
+				cam.tick(handler.object.get(i));
+			}
+		}
 	}
 	
 	private void render() {
@@ -87,11 +95,17 @@ public class Game extends Canvas implements Runnable{
 		}
 		
 		Graphics g = bs.getDrawGraphics();
+		Graphics2D g2d = (Graphics2D) g;
+		
 		//Draw stuff in game here
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		g2d.translate(cam.getX(), cam.getY());
+		
 		handler.render(g);
+		
+		g2d.translate(-cam.getX(), -cam.getY());
 		
 		g.dispose();
 		bs.show();
