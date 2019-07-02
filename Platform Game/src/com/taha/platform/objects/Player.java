@@ -12,7 +12,7 @@ import com.taha.platform.window.Handler;
 
 public class Player extends GameObject{
 	
-	private float width = 32, height = 64;
+	private float width = 48, height = 96;
 	
 	private float gravity = 0.5f;
 	private final float MAX_SPEED = 10;
@@ -43,11 +43,28 @@ public class Player extends GameObject{
 			GameObject tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ObjectId.Block) {
+				
+				if(getBoundsTop().intersects(tempObject.getBounds())){
+					y = tempObject.getY() + 32;
+					velocityY = 0;
+				}
+				
 				if(getBounds().intersects(tempObject.getBounds())) {
 					y = tempObject.getY() - height;
 					velocityY = 0;
 					falling = false;
 					jumping = false;
+				}
+				else
+					falling = true;
+				
+				//RIGHT
+				if(getBoundsRight().intersects(tempObject.getBounds())){
+					x = tempObject.getX() - width;
+				}
+				//LEFT
+				if(getBoundsLeft().intersects(tempObject.getBounds())){
+					x = tempObject.getX() + 32;
 				}
 			}
 		}
@@ -57,12 +74,13 @@ public class Player extends GameObject{
 		g.setColor(Color.blue);
 		g.fillRect((int)x, (int)y, (int)width, (int)height);
 		
-		Graphics2D g2d = (Graphics2D)g;
+		//Collision Box Stuff
+		/*Graphics2D g2d = (Graphics2D)g;
 		g.setColor(Color.red);
 		g2d.draw(getBounds());
 		g2d.draw(getBoundsRight());
 		g2d.draw(getBoundsLeft());
-		g2d.draw(getBoundsTop());
+		g2d.draw(getBoundsTop());*/
 	}
 
 	public Rectangle getBounds() {

@@ -26,6 +26,11 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A) {
 					tempObject.setVelocityX(-5);
 				}
+				if((key == KeyEvent.VK_SPACE || key == KeyEvent.VK_W) && !tempObject.isJumping()) {
+					tempObject.setJumping(true);
+					tempObject.setVelocityY(-10);
+				}
+					
 			}
 		}
 		
