@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import com.taha.platform.framework.KeyInput;
 import com.taha.platform.framework.ObjectId;
+import com.taha.platform.objects.Block;
 import com.taha.platform.objects.Player;
 
 public class Game extends Canvas implements Runnable{
@@ -17,6 +19,8 @@ public class Game extends Canvas implements Runnable{
 	private Thread thread;
 	
 	public static int WIDTH, HEIGHT;
+	
+	private BufferedImage level = null;
 	
 	//Object
 	Handler handler;
@@ -28,15 +32,40 @@ public class Game extends Canvas implements Runnable{
 		WIDTH = getWidth();
 		HEIGHT = getHeight();
 		
+		BufferedImageLoader loader = new BufferedImageLoader();
+		level = loader.loadImage("/level.png");//loading the level
+		
 		handler = new Handler();
 		
 		cam = new Camera(0,0);
 		
-		handler.addObject(new Player(100, 100, handler, ObjectId.Player));
+		loadImageLevel(level);
 		
-		handler.createLevel();
+		//handler.addObject(new Player(100, 100, handler, ObjectId.Player));
+		
+		//handler.createLevel();
 		
 		this.addKeyListener(new KeyInput(handler));
+	}
+	
+	private void loadImageLevel(BufferedImage image) {
+		int w = image.getWidth();
+		int h = image.getHeight();
+		
+		System.out.println("width, height: " + w + " " + h);
+		for(int xx = 0; xx < h; xx++) {
+			for(int yy = 0; yy < w; yy++) {
+				int pixel = image.getRGB(xx, yy);
+				int red = (pixel >> 16) & 0xff;
+				int green = (pixel >> 8) & 0xff;
+				int blue = (pixel) & 0xff;
+				
+				if(red == 255 && green == 255 && blue == 255) {
+					handler.addObject(new Block(xx*32, yy*32, ObjectId.Block));
+				}
+				
+			}
+		}
 	}
 	
 	public synchronized void start() {
@@ -66,7 +95,7 @@ public class Game extends Canvas implements Runnable{
 				updates++;
 				delta--;
 			}
-			render();
+			render(); 
 			frames++;
 				   
 			if(System.currentTimeMillis() - timer > 1000){
