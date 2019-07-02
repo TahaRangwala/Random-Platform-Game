@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import com.taha.platform.framework.GameObject;
+import com.taha.platform.framework.ObjectId;
+import com.taha.platform.objects.Block;
 
 public class Handler {
 
@@ -33,6 +35,12 @@ public class Handler {
 	
 	public void removeObject(GameObject object) {
 		this.object.remove(object);
+	}
+	
+	public void createLevel() {
+		for(int xx = 0; xx < Game.WIDTH+32; xx += 32) {
+			addObject(new Block(xx, Game.HEIGHT-32, ObjectId.Block));
+		}
 	}
 	
 }
