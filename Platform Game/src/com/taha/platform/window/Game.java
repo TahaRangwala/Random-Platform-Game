@@ -8,6 +8,7 @@ import java.util.Random;
 
 import com.taha.platform.framework.ObjectId;
 import com.taha.platform.objects.Block;
+import com.taha.platform.objects.Player;
 
 public class Game extends Canvas implements Runnable{
 	
@@ -26,6 +27,8 @@ public class Game extends Canvas implements Runnable{
 		HEIGHT = getHeight();
 		
 		handler = new Handler();
+		
+		handler.addObject(new Player(100, 100, ObjectId.Player));
 		
 		handler.createLevel();
 	}
